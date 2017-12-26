@@ -1,0 +1,6 @@
+# handlers file for ubuntu-1604-collectd
+---
+- name: restart collectd
+  service:
+    name: collectd
+    state: restarted

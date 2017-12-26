@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+LoadPlugin network
+
+<Plugin "network">
+{% if ubuntu_1604_collectd_plugin_network_server is defined %}
+  Server "{{ ubuntu_1604_collectd_plugin_network_server }}" "{{ ubuntu_1604_collectd_plugin_network_server_port | default(25826) }}"
+{% endif %}
+</Plugin>

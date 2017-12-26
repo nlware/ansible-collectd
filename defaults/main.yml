@@ -1,0 +1,22 @@
+# defaults file for ubuntu-1604-collectb
+---
+ubuntu_1604_collectd_plugins_present:
+  - contextswitch
+  - cpu
+  - df
+  - disk
+  - interface
+  - irq
+  - network
+  - processes
+  - swap
+  - tcpconns
+  - uptime
+
+ubuntu_1604_collectd_plugins_absent: []
+
+ubuntu_1604_collectd_plugin_disk_disks:
+  - '/^[vhs]d[a-f]$/'
+
+ubuntu_1604_collectd_plugin_interface_interfaces:
+  - eth0

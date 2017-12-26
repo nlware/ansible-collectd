@@ -1,0 +1,4 @@
+# vars file for ubuntu-1604-collectd
+---
+ubuntu_1604_collectd_install:
+  - collectd

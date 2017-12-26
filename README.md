@@ -4,7 +4,7 @@ Set up Collectd (client) on Ubuntu 16.04.
 
 #### Variables
 
-* `ubuntu_1604_collectd_plugins_present`: [default: ([see](defaults/main.yml))]: Names of the plugins to install
+* `ubuntu_1604_collectd_plugins_present`: [see: defaults/main.yml]: Names of the plugins to install
 * `ubuntu_1604_collectd_plugins_absent`: [default: `[]`]: Names of the plugins to remove
 
 * `ubuntu_1604_collectd_plugin_network_server`: [required]: The IP-address of the server to send the data to

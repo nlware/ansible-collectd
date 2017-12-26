@@ -1,4 +1,4 @@
-# defaults file for ubuntu-1604-collectb
+# defaults file for ubuntu-1604-collectd
 ---
 ubuntu_1604_collectd_plugins_present:
   - contextswitch

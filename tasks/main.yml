@@ -1,20 +1,46 @@
-# tasks file for ubuntu-1604-collectd
+# tasks file for collectd
 ---
-- name: install
+- name: install dependencies
   apt:
     name: "{{ item }}"
-  with_items: "{{ ubuntu_1604_collectd_install }}"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  with_items: "{{ collectd_dependencies }}"
+  tags:
+    - configuration
+    - collectd
+    - collectd-dependencies
 
-- name: enable and configure plugins
+- name: plugins | enable and configure
   template:
     src: "etc/collectd/collectd.conf.d/{{ item }}.conf.j2"
     dest: "/etc/collectd/collectd.conf.d/{{ item }}.conf"
-  with_items: "{{ ubuntu_1604_collectd_plugins_present }}"
+  with_items: "{{ collectd_plugins_present }}"
   notify: restart collectd
+  tags:
+    - configuration
+    - collectd
+    - collectd-plugins
+    - collectd-plugins-enable
+    - collectd-plugins-configure
 
-- name: disable plugins
+- name: plugins | disable
   file:
     dest: "/etc/collectd/collectd.conf.d/{{ item }}.conf"
     state: absent
-  with_items: "{{ ubuntu_1604_collectd_plugins_absent | default([]) }}"
+  with_items: "{{ collectd_plugins_absent | default([]) }}"
   notify: restart collectd
+  tags:
+    - configuration
+    - collectd
+    - collectd-plugins
+    - collectd-plugins-disable
+
+- name: start and enable service
+  service:
+    name: collectd
+    state: "{{ service_default_state | default('started') }}"
+    enabled: "{{ service_default_enabled | default(true) | bool }}"
+  tags:
+    - collectd-start-enable-service

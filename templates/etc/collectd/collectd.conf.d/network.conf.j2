@@ -3,7 +3,7 @@
 LoadPlugin network
 
 <Plugin "network">
-{% for item in ubuntu_1604_collectd_plugin_network_servers | default([]) %}
+{% for item in collectd_plugin_network_servers | default([]) %}
   <Server "{{ item.server }}" "{{ item.port | default(25826) }}">
 {% if item.security_level | default('None') != 'None' %}
     SecurityLevel "{{ item.security_level }}"

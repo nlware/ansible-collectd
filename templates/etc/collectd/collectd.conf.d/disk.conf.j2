@@ -3,7 +3,7 @@
 LoadPlugin disk
 
 <Plugin disk>
-{% for disk in ubuntu_1604_collectd_plugin_disk_disks | default([]) %}
+{% for disk in collectd_plugin_disk_disks | default([]) %}
   Disk "{{ disk }}"
 {% endfor %}
   IgnoreSelected false

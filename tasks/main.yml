@@ -25,7 +25,7 @@
     - collectd-plugins-enable
     - collectd-plugins-configure
 
-- name: plugins | disable
+- name: plugins | disable (remove configuration file)
   file:
     dest: "/etc/collectd/collectd.conf.d/{{ item }}.conf"
     state: absent
@@ -36,6 +36,37 @@
     - collectd
     - collectd-plugins
     - collectd-plugins-disable
+    - collectd-plugins-remove-configuration-file
+
+- name: plugins | disable (remove LoadPlugin)
+  lineinfile:
+    path: /etc/collectd/collectd.conf
+    state: absent
+    regexp: "^LoadPlugin {{ item }}"
+  with_items: "{{ collectd_plugins_absent | default([]) }}"
+  notify: restart collectd
+  tags:
+    - configuration
+    - collectd
+    - collectd-plugins
+    - collectd-plugins-disable
+    - collectd-plugins-remove-load-plugin
+
+- name: plugins | disable (remove configuration block)
+  blockinfile:
+    path: /etc/collectd/collectd.conf
+    state: absent
+    marker: "{mark}"
+    marker_begin: "<Plugin {{ item }}>"
+    marker_end: '</Plugin>'
+  with_items: "{{ collectd_plugins_absent | default([]) }}"
+  notify: restart collectd
+  tags:
+    - configuration
+    - collectd
+    - collectd-plugins
+    - collectd-plugins-disable
+    - collectd-plugins-remove-configuration-block
 
 - name: start and enable service
   service:

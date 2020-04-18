@@ -1,17 +1,8 @@
 # defaults file for collectd
 ---
-collectd_plugins_present:
-  - contextswitch
-  - cpu
-  - df
-  - disk
-  - interface
-  - irq
-  - network
-  - processes
-  - swap
-  - tcpconns
-  - uptime
+collectd_install: []
+
+collectd_plugins_present: "{{ collectd_plugins_present_default }}"
 
 collectd_plugins_absent: []
 

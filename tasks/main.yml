@@ -12,6 +12,19 @@
     - collectd
     - collectd-dependencies
 
+- name: install additional
+  apt:
+    name: "{{ item }}"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  with_items: "{{ collectd_install }}"
+  notify: restart collectd
+  tags:
+    - configuration
+    - collectd
+    - collectd-additional
+
 - name: plugins | enable and configure
   template:
     src: "etc/collectd/collectd.conf.d/{{ item }}.conf.j2"

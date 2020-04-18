@@ -1,6 +1,7 @@
-# meta file for grafana
+# meta file for collectd
 ---
 galaxy_info:
+  role_name: collectd
   author: Mischa ter Smitten
   company: Oefenweb.nl B.V.
   description: Set up Collectd in Debian-like systems

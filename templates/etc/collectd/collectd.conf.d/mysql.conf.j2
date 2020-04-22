@@ -1,0 +1,29 @@
+# {{ ansible_managed }}
+
+LoadPlugin mysql
+
+<Plugin mysql>
+{% for item in collectd_plugin_mysql_databases | default([]) %}
+  <Database "{{ item.database | default('') }}">
+{% if item.alias %}
+    Alias "{{ item.alias }}"
+{% endif %}
+    Host "{{ item.hostname | default('localhost') }}"
+{% if item.username %}
+    User "{{ item.username }}"
+{% endif %}
+{% if item.password %}
+    Password "{{ item.password }}"
+{% endif %}
+{% if item.port %}
+    Port "{{ item.port }}"
+{% endif %}
+{% if item.socket %}
+    Socket "{{ item.socket }}"
+{% endif %}
+    InnodbStats {{ item.innodb_stats | default('true') }}
+    MasterStats {{ item.master_stats | default('false') }}
+    MasterStats {{ item.slave_stats | default('false') }}
+  </Database>
+{% endfor %}
+</Plugin>

@@ -1,0 +1,25 @@
+# {{ ansible_managed }}
+
+LoadPlugin apache
+
+<Plugin apache>
+{% for item in collectd_plugin_apache_instances | default([]) %}
+  <Instance "{{ item.name | default('apache') }}">
+    URL "{{ item.url | default('http://localhost/server-status?auto') }}"
+{% if item.username %}
+    User "{{ item.username }}"
+{% endif %}
+{% if item.password %}
+    Password "{{ item.password }}"
+{% endif %}
+    VerifyPeer "{{ item.verify_peer | default(true) }}"
+    VerifyHost "{{ item.verify_host | default(true) }}"
+{% if item.ca_cert_file %}
+    CACert "{{ item.ca_cert_file }}"
+{% endif %}
+{% if item.ssl_ciphers %}
+    SSLCiphers "{{ item.ssl_ciphers }}"
+{% endif %}
+  </Instance>
+{% endfor %}
+</Plugin>

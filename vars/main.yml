@@ -2,3 +2,16 @@
 ---
 collectd_dependencies:
   - collectd
+
+collectd_plugins_present_default:
+  - contextswitch
+  - cpu
+  - df
+  - disk
+  - interface
+  - irq
+  - network
+  - processes
+  - swap
+  - tcpconns
+  - uptime

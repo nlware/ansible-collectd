@@ -5,20 +5,20 @@ LoadPlugin mysql
 <Plugin mysql>
 {% for item in collectd_plugin_mysql_databases | default([]) %}
   <Database "{{ item.database | default('') }}">
-{% if item.alias %}
+{% if item.alias is defined %}
     Alias "{{ item.alias }}"
 {% endif %}
     Host "{{ item.hostname | default('localhost') }}"
-{% if item.username %}
+{% if item.username is defined %}
     User "{{ item.username }}"
 {% endif %}
-{% if item.password %}
+{% if item.password is defined %}
     Password "{{ item.password }}"
 {% endif %}
-{% if item.port %}
+{% if item.port is defined %}
     Port "{{ item.port }}"
 {% endif %}
-{% if item.socket %}
+{% if item.socket is defined %}
     Socket "{{ item.socket }}"
 {% endif %}
     InnodbStats {{ item.innodb_stats | default('true') }}

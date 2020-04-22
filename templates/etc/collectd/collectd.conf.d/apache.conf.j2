@@ -6,18 +6,18 @@ LoadPlugin apache
 {% for item in collectd_plugin_apache_instances | default([]) %}
   <Instance "{{ item.name | default('apache') }}">
     URL "{{ item.url | default('http://localhost/server-status?auto') }}"
-{% if item.username %}
+{% if item.username is defined %}
     User "{{ item.username }}"
 {% endif %}
-{% if item.password %}
+{% if item.password is defined %}
     Password "{{ item.password }}"
 {% endif %}
     VerifyPeer "{{ item.verify_peer | default(true) }}"
     VerifyHost "{{ item.verify_host | default(true) }}"
-{% if item.ca_cert_file %}
+{% if item.ca_cert_file is defined %}
     CACert "{{ item.ca_cert_file }}"
 {% endif %}
-{% if item.ssl_ciphers %}
+{% if item.ssl_ciphers is defined %}
     SSLCiphers "{{ item.ssl_ciphers }}"
 {% endif %}
   </Instance>

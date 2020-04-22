@@ -15,3 +15,5 @@ collectd_plugins_present_default:
   - swap
   - tcpconns
   - uptime
+
+collectd_configuration_file: /etc/collectd/collectd.conf

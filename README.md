@@ -1,6 +1,7 @@
 ## collectd
 
-[![Build Status](https://travis-ci.org/Oefenweb/ansible-collectd.svg?branch=master)](https://travis-ci.org/Oefenweb/ansible-collectd) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-collectd-blue.svg)](https://galaxy.ansible.com/Oefenweb/collectd)
+[![Build Status](https://travis-ci.org/Oefenweb/ansible-collectd.svg?branch=master)](https://travis-ci.org/Oefenweb/ansible-collectd)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-collectd-blue.svg)](https://galaxy.ansible.com/Oefenweb/collectd)
 
 Set up [Collectd](https://collectd.org/) in Debian-like systems.
 

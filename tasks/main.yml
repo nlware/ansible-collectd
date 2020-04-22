@@ -2,11 +2,10 @@
 ---
 - name: install dependencies
   apt:
-    name: "{{ item }}"
+    name: "{{ collectd_dependencies }}"
     state: "{{ apt_install_state | default('latest') }}"
     update_cache: true
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
-  with_items: "{{ collectd_dependencies }}"
   tags:
     - configuration
     - collectd
@@ -14,11 +13,10 @@
 
 - name: install additional
   apt:
-    name: "{{ item }}"
+    name: "{{ collectd_install }}"
     state: "{{ apt_install_state | default('latest') }}"
     update_cache: true
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
-  with_items: "{{ collectd_install }}"
   notify: restart collectd
   tags:
     - configuration
@@ -42,7 +40,7 @@
   file:
     dest: "/etc/collectd/collectd.conf.d/{{ item }}.conf"
     state: absent
-  with_items: "{{ collectd_plugins_absent | default([]) }}"
+  with_items: "{{ collectd_plugins_absent }}"
   notify: restart collectd
   tags:
     - configuration
@@ -53,10 +51,10 @@
 
 - name: plugins | disable (remove LoadPlugin)
   lineinfile:
-    path: /etc/collectd/collectd.conf
+    path: "{{ collectd_configuration_file }}"
     state: absent
     regexp: "^LoadPlugin {{ item }}"
-  with_items: "{{ collectd_plugins_absent | default([]) }}"
+  with_items: "{{ collectd_plugins_absent }}"
   notify: restart collectd
   tags:
     - configuration
@@ -67,12 +65,12 @@
 
 - name: plugins | disable (remove configuration block)
   blockinfile:
-    path: /etc/collectd/collectd.conf
+    path: "{{ collectd_configuration_file }}"
     state: absent
     marker: "{mark}"
     marker_begin: "<Plugin {{ item }}>"
     marker_end: '</Plugin>'
-  with_items: "{{ collectd_plugins_absent | default([]) }}"
+  with_items: "{{ collectd_plugins_absent }}"
   notify: restart collectd
   tags:
     - configuration

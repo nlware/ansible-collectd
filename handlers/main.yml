@@ -1,4 +1,4 @@
-# handlers file for collectd
+# handlers file
 ---
 - name: restart collectd
   service:

@@ -1,4 +1,4 @@
-# vars file for collectd
+# vars file
 ---
 collectd_dependencies:
   - collectd

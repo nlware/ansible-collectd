@@ -1,4 +1,4 @@
-# tasks file for collectd
+# tasks file
 ---
 - name: install dependencies
   apt:

@@ -19,7 +19,9 @@ LoadPlugin df
   FSType mqueue
   IgnoreSelected true
   ReportByDevice false
+{% if ansible_distribution != 'Ubuntu' or ansible_distribution_major_version is version('20', '<') %}
   ReportReserved true
+{% endif %}
   ValuesAbsolute true
   ValuesPercentage true
   ReportInodes true

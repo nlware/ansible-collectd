@@ -1,10 +1,11 @@
 # tasks file
 ---
-- block:
+- name: install dependencies
+  block:
 
     # See: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199
     - name: ensure man directory
-      file:
+      ansible.builtin.file:
         path: /usr/share/man/man1
         state: directory
         recurse: true
@@ -13,7 +14,7 @@
         - ansible_distribution_major_version is version('18', '>=')
 
     - name: install dependencies
-      apt:
+      ansible.builtin.apt:
         name: "{{ collectd_dependencies }}"
         state: "{{ apt_install_state | default('latest') }}"
         update_cache: true
@@ -25,7 +26,7 @@
     - collectd-dependencies
 
 - name: install additional
-  apt:
+  ansible.builtin.apt:
     name: "{{ collectd_install }}"
     state: "{{ apt_install_state | default('latest') }}"
     update_cache: true
@@ -37,7 +38,7 @@
     - collectd-additional
 
 - name: plugins | enable and configure
-  template:
+  ansible.builtin.template:
     src: "etc/collectd/collectd.conf.d/{{ item }}.conf.j2"
     dest: "/etc/collectd/collectd.conf.d/{{ item }}.conf"
     mode: 0644
@@ -51,7 +52,7 @@
     - collectd-plugins-configure
 
 - name: plugins | disable (remove configuration file)
-  file:
+  ansible.builtin.file:
     dest: "/etc/collectd/collectd.conf.d/{{ item }}.conf"
     state: absent
   with_items: "{{ collectd_plugins_absent }}"
@@ -64,7 +65,7 @@
     - collectd-plugins-remove-configuration-file
 
 - name: plugins | disable (remove LoadPlugin)
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ collectd_configuration_file }}"
     state: absent
     regexp: "^LoadPlugin {{ item }}"
@@ -78,7 +79,7 @@
     - collectd-plugins-remove-load-plugin
 
 - name: plugins | disable (remove configuration block)
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: "{{ collectd_configuration_file }}"
     state: absent
     marker: "{mark}"
@@ -94,7 +95,7 @@
     - collectd-plugins-remove-configuration-block
 
 - name: start and enable service
-  service:
+  ansible.builtin.service:
     name: collectd
     state: "{{ service_default_state | default('started') }}"
     enabled: "{{ service_default_enabled | default(true) | bool }}"

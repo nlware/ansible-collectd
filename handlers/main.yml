@@ -1,7 +1,7 @@
 # handlers file
 ---
 - name: restart collectd
-  service:
+  ansible.builtin.service:
     name: collectd
     state: restarted
   when: service_default_state | default('started') == 'started'

@@ -37,6 +37,17 @@
     - collectd
     - collectd-additional
 
+- name: configure
+  ansible.builtin.template:
+    src: "etc/default/collectd.j2"
+    dest: "/etc/default/collectd"
+    mode: 0644
+  notify: restart collectd
+  tags:
+    - configuration
+    - collectd
+    - collectd-configure
+
 - name: plugins | enable and configure
   ansible.builtin.template:
     src: "etc/collectd/collectd.conf.d/{{ item }}.conf.j2"

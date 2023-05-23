@@ -37,9 +37,14 @@
 
 - name: configure
   ansible.builtin.template:
-    src: "etc/default/collectd.j2"
-    dest: "/etc/default/collectd"
+    src: "{{ collectd_etc_default_file.lstrip('/') }}.j2"
+    dest: "{{ collectd_etc_default_file }}"
+    owner: root
+    group: root
     mode: 0644
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_major_version is version('20', '==')
   notify: restart collectd
   tags:
     - configuration

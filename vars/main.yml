@@ -17,3 +17,4 @@ collectd_plugins_present_default:
   - uptime
 
 collectd_configuration_file: /etc/collectd/collectd.conf
+collectd_etc_default_file: /etc/default/collectd

@@ -35,6 +35,22 @@
     - collectd
     - collectd-additional
 
+- name: configure
+  ansible.builtin.template:
+    src: "{{ collectd_etc_default_file.lstrip('/') }}.j2"
+    dest: "{{ collectd_etc_default_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_major_version is version('20', '==')
+  notify: restart collectd
+  tags:
+    - configuration
+    - collectd
+    - collectd-configure
+
 - name: plugins | enable and configure
   ansible.builtin.template:
     src: "etc/collectd/collectd.conf.d/{{ item }}.conf.j2"

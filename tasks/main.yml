@@ -1,8 +1,11 @@
 # tasks file
 ---
 - name: install dependencies
+  tags:
+    - configuration
+    - collectd
+    - collectd-dependencies
   block:
-
     # See: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199
     - name: ensure man directory
       ansible.builtin.file:
@@ -19,11 +22,6 @@
         state: "{{ apt_install_state | default('latest') }}"
         update_cache: true
         cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
-
-  tags:
-    - configuration
-    - collectd
-    - collectd-dependencies
 
 - name: install additional
   ansible.builtin.apt:

@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 
 <Plugin "interface">
 {% for interface in collectd_plugin_interface_interfaces | default([]) %}

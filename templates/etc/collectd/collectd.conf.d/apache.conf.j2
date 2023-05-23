@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 
 LoadPlugin apache
 
@@ -12,8 +12,8 @@ LoadPlugin apache
 {% if item.password is defined %}
     Password "{{ item.password }}"
 {% endif %}
-    VerifyPeer {{ item.verify_peer | default(true) }}
-    VerifyHost {{ item.verify_host | default(true) }}
+    VerifyPeer {{ item.verify_peer | default(true) | bool | to_json }}
+    VerifyHost {{ item.verify_host | default(true) | bool | to_json }}
 {% if item.ca_cert_file is defined %}
     CACert "{{ item.ca_cert_file }}"
 {% endif %}

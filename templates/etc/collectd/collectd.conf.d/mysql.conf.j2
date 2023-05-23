@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 
 LoadPlugin mysql
 
@@ -21,9 +21,9 @@ LoadPlugin mysql
 {% if item.socket is defined %}
     Socket "{{ item.socket }}"
 {% endif %}
-    InnodbStats {{ item.innodb_stats | default('true') }}
-    MasterStats {{ item.master_stats | default('false') }}
-    MasterStats {{ item.slave_stats | default('false') }}
+    InnodbStats {{ item.innodb_stats | default(true) | bool | to_json }}
+    MasterStats {{ item.master_stats | default(false) | bool | to_json }}
+    MasterStats {{ item.slave_stats | default(false) | bool | to_json }}
   </Database>
 {% endfor %}
 </Plugin>

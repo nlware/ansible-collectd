@@ -71,7 +71,7 @@ None
 ---
 - hosts: all
   roles:
-    - collectd
+    - oefenweb.collectd
   vars:
     collectd_plugin_network_servers:
       - server: '10.0.0.1'
@@ -83,7 +83,7 @@ None
 ---
 - hosts: all
   roles:
-    - collectd
+    - oefenweb.collectd
   vars:
     collectd_plugin_network_servers:
       - server: '10.0.0.1'
@@ -98,7 +98,7 @@ None
 ---
 - hosts: all
   roles:
-    - collectd
+    - oefenweb.collectd
   vars:
     collectd_install:
       - collectd-utils
